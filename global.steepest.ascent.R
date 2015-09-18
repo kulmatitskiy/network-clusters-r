@@ -15,10 +15,29 @@ sample.groups.dirichlet <- function (N, group.choices, prev.groups = NULL) {
 #     # # # # Not implemented # # # # 
 # }
 
-global.steepest.ascent = function (objective.matrix, max.groups, trials = 10, reference.groups = NULL,
+
+# The Algorithm
+
+global.steepest.ascent <- function (objective.matrix, max.groups, trials = 10, reference.groups = NULL,
                                    details = FALSE, generator = sample.groups.dirichlet, seed = NULL) 
 {
-  # begine with some preparations
+  # Performs global steepest ascent optimization by sampling starting points from the provided 'generator' function.
+  #
+  # Required Args:
+  #   objective.matrix: Objective Matrix for which optimal group vector should be found (see README)
+  #   max.groups: Maximum number of groups to use in the group vector.
+  #   trials: Number of trials.
+  # Optional Args:
+  #   reference.groups: a vector of length N with values in 1:max.groups that results
+  #                     will be compared to
+  #   details: boolean flag to provide details or not
+  #   generator: function(N, group.choices, prev.groups = NULL) used to generate
+  #              a starting point for next trial
+  #   
+  # Returns:
+  #   list object with various results of the algorithm
+  
+  # Start with some preparations
   if (!is.null(seed)) {
     set.seed(seed)
   }
@@ -43,7 +62,7 @@ global.steepest.ascent = function (objective.matrix, max.groups, trials = 10, re
     reference.obj.value <- tmp$obj.value
   }
 
-  # actual search loop begins here
+  # Actual search loop begins here
   groups <- generator(N, group.choices, NULL)
   for (t in 1:trials) {
     tmp <- local.steepest.ascent(objective.matrix, groups)
@@ -62,7 +81,7 @@ global.steepest.ascent = function (objective.matrix, max.groups, trials = 10, re
     }
   }
   
-  # prepare return list
+  # Done; Prepare return list
   ret.list = list(groups = best.groups, obj.value = best.obj.value)
   if (details) {
     ret.list$time <- proc.time() - ptm
@@ -80,3 +99,30 @@ global.steepest.ascent = function (objective.matrix, max.groups, trials = 10, re
   }
   return(ret.list)
 }
+
+# 
+# global_ascent_stage = function(objective_matrix, G, trials = 10, timed = FALSE){
+#     group_choices = 1:G
+#     N = nrow(objective_matrix)
+#     best_objective = -Inf
+#     promised <<- c()
+#     features <<- c()
+#     for(t in 1:trials){
+#         groups = sample(group_choices, N, replace = TRUE)
+#         features_tmp = c()
+#         while(TRUE){
+#             C = comembership_matrix(groups)
+#             sizes = unique(rowSums(C))
+#             BC = objective_matrix %*% comembership_matrix(groups)
+#             D = BC - diag(BC)
+#             if(any(D > 0)){
+#                 features_tmp = rbind(features_tmp, c(foo(groups, G)))
+#                 groups = switch_groups_by_D(D, max(D), groups)
+#             }else{
+#                 features <<- rbind(features, features_tmp)
+#                 promised <<- c(promised, rep(sum(diag(BC)), length.out = nrow(features_tmp)))
+#                 break
+#             }
+#         }
+#     }
+# }

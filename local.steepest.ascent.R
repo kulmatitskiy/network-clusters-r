@@ -1,13 +1,13 @@
 source("common.R")
 
-switch.groups = function(groups, D) {
+switch.groups <- function(groups, D) {
   coord <- which(D == max(D), arr.ind=TRUE)[1,] # Note: it is suboptimal to find max and index_max in two separate steps
   groups[coord[1]] <- groups[coord[2]]
   return(groups)
 }
 
 # perform steepest ascent algorithm locally starting with provided groups vector
-local.steepest.ascent = function(objective.matrix, groups, perturb = FALSE, store.trace = FALSE, trace.apply.fun = NULL) {
+local.steepest.ascent <- function(objective.matrix, groups, perturb = FALSE, store.trace = FALSE, trace.apply.fun = NULL) {
   trace.group.counts <- c(); 
   trace.obj.values <- c(); 
   trace.apply.values <- c()

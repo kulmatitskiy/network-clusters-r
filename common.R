@@ -1,4 +1,3 @@
-library(MCMCpack)
 
 comembership.matrix <- function(groups) {
   C <- matrix(as.numeric((groups%o%(1/groups))==1), ncol=length(groups), nrow=length(groups))

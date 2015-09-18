@@ -1,4 +1,3 @@
-library(MCMCpack)
 source("common.R")
 
 switch.groups = function(groups, D) {

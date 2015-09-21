@@ -7,7 +7,7 @@ switch.groups <- function(groups, D) {
 }
 
 # perform steepest ascent algorithm locally starting with provided groups vector
-local.steepest.ascent <- function(objective.matrix, groups, perturb = FALSE, store.trace = FALSE, trace.apply.fun = NULL) {
+local.steepest.ascent <- function(objective.matrix, groups, store.trace = FALSE, trace.apply.fun = NULL) {
   trace.group.counts <- c(); 
   trace.obj.values <- c(); 
   trace.apply.values <- c()

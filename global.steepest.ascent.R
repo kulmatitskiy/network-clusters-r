@@ -8,7 +8,7 @@ sample.groups.uniform <- function(N, group.choices, prev.groups = NULL) {
 }
 
 sample.groups.dirichlet <- function (N, group.choices, prev.groups = NULL) {
-  return(sample(group.choices, N, replace = TRUE, prob = rdirichlet(1, rep(2,length(group.choices)))))
+  return(sample(group.choices, N, replace = TRUE, prob = rdirichlet(1, rep(2, length(group.choices)))))
 }
 
 # sample_groups_lognormal = function(N, group.choices, prev.groups = NULL) {
@@ -82,7 +82,7 @@ global.steepest.ascent <- function (objective.matrix, max.groups, trials = 10, r
   }
   
   # Done; Prepare return list
-  ret.list = list(groups = best.groups, obj.value = best.obj.value)
+  ret.list <- list(groups = best.groups, obj.value = best.obj.value)
   if (details) {
     ret.list$time <- proc.time() - ptm
     if (!is.null(reference.groups)) {
